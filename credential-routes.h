@@ -100,7 +100,7 @@ void handleSave() {
   "<!DOCTYPE   html>"
     "<html>"
     "<style>"
-    "body {overflow:hidden; margin-top:10%; background:#8093F1; color:white; font-family:Arial, Helvetica, sans-serif;}"
+    "body {overflow:hidden; margin-top:10%; background:#8093F1; color:white; font-family: Arial, Helvetica, sans-serif;}"
     "</style>"
     "<head><title>manny update</title></head>"
     "<body>"

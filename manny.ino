@@ -74,28 +74,6 @@ void lightOff() {
   lit = false;
 }
 
-void lightLow() {
-  String jsonResponse = "{\"light\":\"on\", \"source\":\"manequin\"}";
-  server.send(200, "application/json", jsonResponse);
-
-  analogWrite(led, 16);
-  lit = true;
-} 
-void lightMid() {
-  String jsonResponse = "{\"light\":\"on\", \"source\":\"manequin\"}";
-  server.send(200, "application/json", jsonResponse);
-
-  analogWrite(led, 64);
-  lit = true;
-} 
-void lightBright() {
-  String jsonResponse = "{\"light\":\"on\", \"source\":\"manequin\"}";
-  server.send(200, "application/json", jsonResponse);
-
-  analogWrite(led, 128);
-  lit = true;
-}
-
 void updateBrightness() {
   if (server.hasArg("plain")) {
     String body = server.arg("plain");
@@ -160,15 +138,12 @@ void setup() {
   server.on("/alarm_off", alarmOff);
   server.on("/light_on", lightOn);
   server.on("/light_off", lightOff);
-  server.on("/light_dim", lightLow); 
-  server.on("/light_mid", lightMid);
-  server.on("/light_bright", lightBright);
   server.on("/update_brightness", HTTP_POST, updateBrightness);
 
   server.begin();
   Serial.println("server started");
 
-  delay(1000);
+  yield();
 
   WiFi.begin(ssid, password);
 
@@ -177,13 +152,16 @@ void setup() {
   
   while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < timeout) {
     server.handleClient();
-    delay(50);
+    delay(100);
     Serial.print(".");
   }
 
   if (WiFi.status() == WL_CONNECTED) {
     WiFi.softAPdisconnect(true);
-    Serial.println("\nConnected!");
+    float connectSeconds = (millis() - startAttemptTime) / 1000.0;
+    Serial.print("\nconnected in ");
+    Serial.print(connectSeconds);
+    Serial.println(" sec");
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
   } else {
