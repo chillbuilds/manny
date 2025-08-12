@@ -18,6 +18,10 @@ void handleRoot() {
     "}"
     "#credentials.open {max-height: 500px; opacity:1;}"
 
+    "#brightnessInput {max-height: 500px; opacity:1;}"
+    "@media (min-width: 1200px) {"
+      "#brightnessInput.hide {overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.3s ease, opacity 0.3s ease;}"
+    "}"
     "</style>"
 
     "<head><title>manny update</title></head>"
@@ -35,7 +39,7 @@ void handleRoot() {
       "</form>"
     "</div>"
 
-    "<div style='position: absolute; width:80%; margin-left:10%; top:40%;'>"
+    "<div id='brightnessInput' style='position: absolute; width:80%; margin-left:10%; top:40%;'>"
       "<input style='width:100%;' type='range' id='brightnessSlider' name='brightnessSlider' min='2' max='255' value='" + brightness + "'>"
       "<div style='margin-top:15%; display: flex; justify-content: center; gap: 200px;'>"
         "<button id='on' value='light on'>on</button>"
@@ -45,7 +49,8 @@ void handleRoot() {
 
     "<script>"
       "document.getElementById('settings').addEventListener('click', () => {"
-      "  document.getElementById('credentials').classList.toggle('open');"
+        "document.getElementById('credentials').classList.toggle('open');"
+        "document.getElementById('brightnessInput').classList.toggle('hide');"
       "});"
 
       "let slider = document.getElementById('brightnessSlider');"
